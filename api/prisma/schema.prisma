@@ -7,29 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cliente{
-  id Int @id @default(autoincrement())
-  cpf String? @db.VarChar(20) @unique
-  nome String
-  telefones Telefone[]
-  pedidos Pedido[]
+model cliente {
+  id       Int        @id @default(autoincrement())
+  cpf      String?    @unique(map: "Cliente_cpf_key") @db.VarChar(20)
+  nome     String
+  pedido   pedido[]
+  telefone telefone[]
 }
 
-model Telefone{
-  id Int @id @default(autoincrement())
+model pedido {
+  id        Int      @id @default(autoincrement())
   clienteId Int
-  numero String @db.VarChar(20)
-  tipo String @db.VarChar(20)
-  cliente Cliente @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  data      DateTime @default(now())
+  produto   String
+  qtd       Int
+  preco     Decimal  @db.Decimal(10, 2)
+  subTotal  Decimal? @db.Decimal(10, 2)
+  cliente   cliente  @relation(fields: [clienteId], references: [id], map: "Pedido_clienteId_fkey")
+
+  @@index([clienteId], map: "Pedido_clienteId_fkey")
 }
 
-model Pedido{
-  id Int @id @default(autoincrement())
+model telefone {
+  id        Int     @id @default(autoincrement())
   clienteId Int
-  data DateTime @default(now())
-  produto String
-  qtd Int
-  preco Decimal @db.Decimal(10,2)
-  subTotal Decimal? @db.Decimal(10,2)
-  cliente Cliente @relation(fields: [clienteId], references: [id])
+  numero    String  @db.VarChar(20)
+  tipo      String  @db.VarChar(20)
+  cliente   cliente @relation(fields: [clienteId], references: [id], onDelete: Cascade, map: "Telefone_clienteId_fkey")
+
+  @@index([clienteId], map: "Telefone_clienteId_fkey")
 }

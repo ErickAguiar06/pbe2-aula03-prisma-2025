@@ -3,33 +3,34 @@ const prisma = new PrismaClient();
 
 const create = async (req, res) => {
     const dados = req.body;
-    dados.subTotal = dados.qtd * dados.preco;
+    dados.subTotal = dados.qtd * dados.preco; // Calcula o subtotal
     try {
         const pedido = await prisma.pedido.create({
             data: dados,
         });
         res.status(201).json(pedido).end();
     } catch (e) {
+        console.error(e);
         res.status(400).json(e).end();
     }
-}
+};
 
 const read = async (req, res) => {
     const pedidos = await prisma.pedido.findMany();
     res.json(pedidos);
-}
+};
 
 const readOne = async (req, res) => {
     const pedidos = await prisma.pedido.findMany({
-        where:{
+        where: {
             id: Number(req.params.id)
         },
-        include:{
+        include: {
             cliente: true
         }
     });
     res.json(pedidos);
-}
+};
 
 const update = async (req, res) => {
     try {
@@ -43,7 +44,7 @@ const update = async (req, res) => {
     } catch (e) {
         res.status(400).json(e).end();
     }
-}
+};
 
 const remove = async (req, res) => {
     try {
@@ -56,7 +57,7 @@ const remove = async (req, res) => {
     } catch (e) {
         res.status(400).json(e).end();
     }
-}
+};
 
 module.exports = {
     create,
@@ -64,4 +65,4 @@ module.exports = {
     readOne,
     update,
     remove
-}
+};

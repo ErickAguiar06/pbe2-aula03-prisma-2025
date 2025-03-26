@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snoopy Petshop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>SNOOPY PETSHOP</h1>
+        <button onclick="cadastro.classList.remove('oculto')">Cadastro cliente</button>
+        <button onclick="cadastro.classList.remove('oculto')">Listar produtos</button>
+    </header>
+    <main>
+    </main>
+    <footer>
+        <h2>Autor: Erick / Data: 26 Março 2025</h2>
+    </footer>
+    <div id="cadastro" class="modal oculto">
+        <div class="janela">
+            <div>
+                <h3>Cadastro</h3>
+                <button onclick="window.location.reload()">X</button>
+            </div>
+            <form>
+                <input type="text" name="nome" placeholder="Nome do cliente" required>
+                <input type="text" name="cpf" placeholder="CPF" required>
+                <input type="text" name="telefone" placeholder="Telefone" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+        <div class="janela2">
+            <div>
+                <h3>Listar Produtos</h3>
+                <button onclick="window.location.reload()">X</button>
+            </div>
+            <form>
+                <input type="text" name="nome" placeholder="Pedido" required>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
